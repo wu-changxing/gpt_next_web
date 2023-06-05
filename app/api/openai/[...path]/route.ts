@@ -13,7 +13,7 @@ async function handle(
 ) {
   console.log("[OpenAI Route] params ", params); // 打印日志，输出 params 参数的值
 
-  const authResult = auth(req); // 调用 auth 函数，传入 req 对象进行身份验证
+  const authResult = await auth(req); // 调用 auth 函数，传入 req 对象进行身份验证
   if (authResult.error) {
     return NextResponse.json(authResult, {
       status: 401,

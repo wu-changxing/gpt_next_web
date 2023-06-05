@@ -19,7 +19,7 @@ declare global {
 
 async function handle() {
   // 定义异步函数 handle，用于处理请求并返回响应
-  return NextResponse.json(DANGER_CONFIG); // 将 DANGER_CONFIG 以 JSON 格式作为响应返回
+  NextResponse.json(DANGER_CONFIG); // 将 DANGER_CONFIG 以 JSON 格式作为响应返回
 }
 
 export const GET = handle; // 导出 handle 函数作为 GET 常量，供路由使用

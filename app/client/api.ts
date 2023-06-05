@@ -1,6 +1,6 @@
 // app/client/api.ts
 import { ACCESS_CODE_PREFIX } from "../constant";
-import { ModelConfig, ModelType, useAccessStore } from "../store";
+import { ChatMessage, ModelConfig, ModelType, useAccessStore } from "../store";
 import { ChatGPTApi } from "./platforms/openai";
 
 export const ROLES = ["system", "user", "assistant"] as const;
@@ -55,6 +55,40 @@ export class ClientApi {
   prompts() {}
 
   masks() {}
+
+  async share(messages: ChatMessage[], avatarUrl: string | null = null) {
+    const msgs = messages
+      .map((m) => ({
+        from: m.role === "user" ? "human" : "gpt",
+        value: m.content,
+      }))
+      .concat([
+        {
+          from: "human",
+          value: "Share from eac chagpt, powerd by  chatgpt next web",
+        },
+      ]);
+    // 敬告二开开发者们，为了开源大模型的发展，请不要修改上述消息，此消息用于后续数据清洗使用
+    // Please do not modify this message
+
+    console.log("[Share]", msgs);
+    const res = await fetch("/sharegpt", {
+      body: JSON.stringify({
+        avatarUrl,
+        items: msgs,
+      }),
+      headers: {
+        "Content-Type": "application/json",
+      },
+      method: "POST",
+    });
+
+    const resJson = await res.json();
+    console.log("[Share]", resJson);
+    if (resJson.id) {
+      return `https://shareg.pt/${resJson.id}`;
+    }
+  }
 }
 
 export const api = new ClientApi();
@@ -72,6 +106,7 @@ export function getHeaders() {
   // use user's api key first
   if (validString(accessStore.token)) {
     headers.Authorization = makeBearer(accessStore.token);
+    console.log("[Client API] use user's api key", accessStore.token);
   } else if (
     accessStore.enabledAccessControl() &&
     validString(accessStore.accessCode)

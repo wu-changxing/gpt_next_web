@@ -36,12 +36,14 @@ export const useAccessStore = create<AccessControlStore>()(
 
         return get().needCode;
       },
+
       updateCode(code: string) {
         set(() => ({ accessCode: code }));
       },
       updateToken(token: string) {
         set(() => ({ token }));
       },
+
       isAuthorized() {
         get().fetch();
 

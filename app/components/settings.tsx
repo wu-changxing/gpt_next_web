@@ -245,6 +245,7 @@ export function Settings() {
     subscription: updateStore.subscription,
   };
   const [loadingUsage, setLoadingUsage] = useState(false);
+
   function checkUsage(force = false) {
     setLoadingUsage(true);
     updateStore.updateUsage(force).finally(() => {
@@ -270,6 +271,14 @@ export function Settings() {
     checkUpdate();
     showUsage && checkUsage();
     // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+  useEffect(() => {
+    if (!accessStore.accessCode || accessStore.accessCode === "") {
+      // Update token from local storage
+      const token = localStorage.getItem("token");
+      console.log("[Settings] update token from local storage", token);
+      accessStore.updateCode(token ?? "");
+    }
   }, []);
 
   useEffect(() => {
@@ -489,14 +498,26 @@ export function Settings() {
               title={Locale.Settings.AccessCode.Title}
               subTitle={Locale.Settings.AccessCode.SubTitle}
             >
-              <PasswordInput
-                value={accessStore.accessCode}
-                type="text"
-                placeholder={Locale.Settings.AccessCode.Placeholder}
-                onChange={(e) => {
-                  accessStore.updateCode(e.currentTarget.value);
-                }}
-              />
+              {/*<PasswordInput*/}
+              {/*  value={accessStore.accessCode}*/}
+              {/*  type="text"*/}
+              {/*  placeholder={Locale.Settings.AccessCode.Placeholder}*/}
+              {/*  onChange={(e) => {*/}
+              {/*    accessStore.updateCode(e.currentTarget.value);*/}
+              {/*  }}*/}
+
+              {/*/>*/}
+
+              {/*{*/}
+              {/*    (() => {*/}
+              {/*        // Check if token is not present or is an empty string*/}
+              {/*        if (!accessStore.accessCode || accessStore.accessCode === "") {*/}
+              {/*            // Update token from local storage*/}
+              {/*            accessStore.useLocalToken();*/}
+              {/*        }*/}
+              {/*    })()*/}
+              {/*}*/}
+              <div>Your secret is: {accessStore.accessCode}</div>
             </ListItem>
           ) : (
             <></>

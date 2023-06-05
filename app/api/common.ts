@@ -1,9 +1,11 @@
 // app/api/common.ts
 import { NextRequest } from "next/server"; // 导入 Next.js 的 NextRequest 对象，用于处理请求
+
 export const OPENAI_URL = "api.openai.com"; // 定义 OPENAI_URL 常量，表示 OpenAI API 的 URL
 const DEFAULT_PROTOCOL = "https"; // 定义 DEFAULT_PROTOCOL 常量，默认为 "https"
 const PROTOCOL = process.env.PROTOCOL ?? DEFAULT_PROTOCOL; // 从环境变量中获取 PROTOCOL，如果不存在则使用 DEFAULT_PROTOCOL
 const BASE_URL = process.env.BASE_URL ?? OPENAI_URL; // 从环境变量中获取 BASE_URL，如果不存在则使用 OPENAI_URL
+// export const DJ_URL = process.env.DJ_URL ?? "https://aaron404.com"; // 从环境变量中获取 DJ_URL，如果不存在则使用 "api.openai.com"
 
 export async function requestOpenai(req: NextRequest) {
   const controller = new AbortController(); // 创建一个 AbortController 对象，用于在需要时中止请求
@@ -50,7 +52,13 @@ export async function requestOpenai(req: NextRequest) {
 
     if (res.status === 401) {
       // to prevent browser prompt for credentials
-      res.headers.delete("www-authenticate"); // 如果响应状态为 401，删除响应头中的 "www-authenticate" 字段，以防止浏览器弹出凭据提示框
+      const newHeaders = new Headers(res.headers);
+      newHeaders.delete("www-authenticate");
+      return new Response(res.body, {
+        status: res.status,
+        statusText: res.statusText,
+        headers: newHeaders,
+      });
     }
 
     return res; // 返回响应对象

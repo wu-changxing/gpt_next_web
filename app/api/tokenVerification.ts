@@ -18,7 +18,7 @@ export async function verifyDjangoToken(token: string) {
     const data = await res.json(); // Extract JSON from the response
     console.log("data: ", data);
     // Check if 'valid' is true in the response data
-    return data.gvalid === true;
+    return data.valid === true;
   }
 
   return false;

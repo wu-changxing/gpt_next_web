@@ -364,30 +364,30 @@ export function Settings() {
             </Popover>
           </ListItem>
 
-          <ListItem
-            title={Locale.Settings.Update.Version(currentVersion ?? "unknown")}
-            subTitle={
-              checkingUpdate
-                ? Locale.Settings.Update.IsChecking
-                : hasNewVersion
-                ? Locale.Settings.Update.FoundUpdate(remoteId ?? "ERROR")
-                : Locale.Settings.Update.IsLatest
-            }
-          >
-            {checkingUpdate ? (
-              <LoadingIcon />
-            ) : hasNewVersion ? (
-              <Link href={UPDATE_URL} target="_blank" className="link">
-                {Locale.Settings.Update.GoToUpdate}
-              </Link>
-            ) : (
-              <IconButton
-                icon={<ResetIcon></ResetIcon>}
-                text={Locale.Settings.Update.CheckUpdate}
-                onClick={() => checkUpdate(true)}
-              />
-            )}
-          </ListItem>
+          {/*<ListItem*/}
+          {/*  title={Locale.Settings.Update.Version(currentVersion ?? "unknown")}*/}
+          {/*  subTitle={*/}
+          {/*    checkingUpdate*/}
+          {/*      ? Locale.Settings.Update.IsChecking*/}
+          {/*      : hasNewVersion*/}
+          {/*      ? Locale.Settings.Update.FoundUpdate(remoteId ?? "ERROR")*/}
+          {/*      : Locale.Settings.Update.IsLatest*/}
+          {/*  }*/}
+          {/*>*/}
+          {/*  {checkingUpdate ? (*/}
+          {/*    <LoadingIcon />*/}
+          {/*  ) : hasNewVersion ? (*/}
+          {/*    <Link href={UPDATE_URL} target="_blank" className="link">*/}
+          {/*      {Locale.Settings.Update.GoToUpdate}*/}
+          {/*    </Link>*/}
+          {/*  ) : (*/}
+          {/*    <IconButton*/}
+          {/*      icon={<ResetIcon></ResetIcon>}*/}
+          {/*      text={Locale.Settings.Update.CheckUpdate}*/}
+          {/*      onClick={() => checkUpdate(true)}*/}
+          {/*    />*/}
+          {/*  )}*/}
+          {/*</ListItem>*/}
 
           <ListItem title={Locale.Settings.SendKey}>
             <Select
@@ -539,29 +539,29 @@ export function Settings() {
             </ListItem>
           ) : null}
 
-          <ListItem
-            title={Locale.Settings.Usage.Title}
-            subTitle={
-              showUsage
-                ? loadingUsage
-                  ? Locale.Settings.Usage.IsChecking
-                  : Locale.Settings.Usage.SubTitle(
-                      usage?.used ?? "[?]",
-                      usage?.subscription ?? "[?]",
-                    )
-                : Locale.Settings.Usage.NoAccess
-            }
-          >
-            {!showUsage || loadingUsage ? (
-              <div />
-            ) : (
-              <IconButton
-                icon={<ResetIcon></ResetIcon>}
-                text={Locale.Settings.Usage.Check}
-                onClick={() => checkUsage(true)}
-              />
-            )}
-          </ListItem>
+          {/*<ListItem*/}
+          {/*  title={Locale.Settings.Usage.Title}*/}
+          {/*  subTitle={*/}
+          {/*    showUsage*/}
+          {/*      ? loadingUsage*/}
+          {/*        ? Locale.Settings.Usage.IsChecking*/}
+          {/*        : Locale.Settings.Usage.SubTitle(*/}
+          {/*            usage?.used ?? "[?]",*/}
+          {/*            usage?.subscription ?? "[?]",*/}
+          {/*          )*/}
+          {/*      : Locale.Settings.Usage.NoAccess*/}
+          {/*  }*/}
+          {/*>*/}
+          {/*  {!showUsage || loadingUsage ? (*/}
+          {/*    <div />*/}
+          {/*  ) : (*/}
+          {/*    <IconButton*/}
+          {/*      icon={<ResetIcon></ResetIcon>}*/}
+          {/*      text={Locale.Settings.Usage.Check}*/}
+          {/*      onClick={() => checkUsage(true)}*/}
+          {/*    />*/}
+          {/*  )}*/}
+          {/*</ListItem>*/}
         </List>
 
         <List>

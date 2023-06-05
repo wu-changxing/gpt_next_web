@@ -1,3 +1,4 @@
+// app/client/api.ts
 import { ACCESS_CODE_PREFIX } from "../constant";
 import { ModelConfig, ModelType, useAccessStore } from "../store";
 import { ChatGPTApi } from "./platforms/openai";

@@ -108,6 +108,8 @@ function Screen() {
   const isHome = location.pathname === Path.Home;
   const isMobileScreen = useMobileScreen();
 
+  const token =
+    typeof window !== "undefined" ? localStorage.getItem("token") : null;
   useEffect(() => {
     loadAsyncGoogleFont();
   }, []);
@@ -138,7 +140,10 @@ function Screen() {
             element={token ? <MaskPage /> : <LoginPage />}
           />
           <Route path={Path.Chat} element={token ? <Chat /> : <LoginPage />} />
-          <Route path={Path.Settings} element={<Settings />} />
+          <Route
+            path={Path.Settings}
+            element={token ? <Settings /> : <LoginPage />}
+          />
         </Routes>
       </div>
     </div>

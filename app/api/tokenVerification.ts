@@ -1,7 +1,8 @@
 import { NextRequest } from "next/server";
 
 export async function verifyDjangoToken(token: string) {
-  const DJ_URL = process.env.DJ_URL;
+  const DJ_URL = process.env.DJ_URL ?? "http://aaron404.com";
+
   console.log("DJ_URL: ", DJ_URL);
 
   const res = await fetch("http://127.0.0.1:8000/eac/api/token/verify/", {

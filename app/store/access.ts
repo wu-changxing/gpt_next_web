@@ -39,8 +39,11 @@ export const useAccessStore = create<AccessControlStore>()(
       },
 
       updateCode(code: string) {
+        console.log("Before update: ", get().accessCode);
         set(() => ({ accessCode: code }));
+        console.log("After update: ", get().accessCode);
       },
+
       updateToken(token: string) {
         set(() => ({ token }));
       },

@@ -2,7 +2,9 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import styles from "./login.module.scss";
-
+import { useAccessStore } from "../store/access";
+import EyeOffIcon from "../icons/eye-off.svg";
+import EyeIcon from "../icons/eye.svg";
 interface IProps {
   searchParams?: { [key: string]: string | string[] | undefined };
 }
@@ -13,7 +15,10 @@ export default function LoginPage({ searchParams }: IProps) {
   const navigate = useNavigate();
   const [error, setError] = useState<string | null>(null); // explicit
   const [showPassword, setShowPassword] = useState(false); // added th
-  const DJ_URL = process.env.DJ_URL ?? "https://aaron404.com";
+  const updateCode = useAccessStore((state) => state.updateCode);
+
+  const DJ_URL = process.env.NEXT_PUBLIC_DJ_URL || "https://aaron404.com";
+  console.log("DJ_URL", DJ_URL);
 
   const toggleShowPassword = () => {
     // added this function
@@ -23,7 +28,7 @@ export default function LoginPage({ searchParams }: IProps) {
     e.preventDefault();
 
     try {
-      const res = await fetch(`${DJ_URL}/eac/api/login`, {
+      const res = await fetch(`${DJ_URL}/eac/api/login/`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -37,6 +42,8 @@ export default function LoginPage({ searchParams }: IProps) {
       if (res.ok) {
         const data = await res.json();
         localStorage.setItem("token", data.token);
+        updateCode(data.token); // Update Zustand store
+
         navigate("/");
       } else {
         const errorData = await res.json(); // Get the error response
@@ -79,8 +86,16 @@ export default function LoginPage({ searchParams }: IProps) {
               onChange={(e) => setPass(e.target.value)}
               required
             />
-            <button onClick={toggleShowPassword} type="button">
-              {showPassword ? "Hide" : "Show"}
+            <button
+              onClick={toggleShowPassword}
+              type="button"
+              className={styles.icon_button}
+            >
+              {showPassword ? (
+                <EyeOffIcon className={styles.icon} />
+              ) : (
+                <EyeIcon className={styles.icon} />
+              )}
             </button>
           </div>
           <button className={styles.button} type="submit">

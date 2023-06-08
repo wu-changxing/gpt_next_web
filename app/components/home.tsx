@@ -1,7 +1,7 @@
 "use client";
 
 require("../polyfill");
-
+import React, { ReactNode } from "react";
 import { useState, useEffect } from "react";
 
 import styles from "./home.module.scss";
@@ -20,6 +20,7 @@ import {
   Routes,
   Route,
   useLocation,
+  useNavigate,
 } from "react-router-dom";
 import { SideBar } from "./sidebar";
 import { useAppConfig } from "../store/config";
@@ -46,6 +47,9 @@ const NewChat = dynamic(async () => (await import("./new-chat")).NewChat, {
 });
 
 const MaskPage = dynamic(async () => (await import("./mask")).MaskPage, {
+  loading: () => <Loading noLogo />,
+});
+const LoginPage = dynamic(async () => (await import("./login")).default, {
   loading: () => <Loading noLogo />,
 });
 
@@ -123,10 +127,17 @@ function Screen() {
 
       <div className={styles["window-content"]} id={SlotID.AppBody}>
         <Routes>
-          <Route path={Path.Home} element={<Chat />} />
-          <Route path={Path.NewChat} element={<NewChat />} />
-          <Route path={Path.Masks} element={<MaskPage />} />
-          <Route path={Path.Chat} element={<Chat />} />
+          <Route path="/login" element={<LoginPage />} />
+          <Route path={Path.Home} element={token ? <Chat /> : <LoginPage />} />
+          <Route
+            path={Path.NewChat}
+            element={token ? <NewChat /> : <LoginPage />}
+          />
+          <Route
+            path={Path.Masks}
+            element={token ? <MaskPage /> : <LoginPage />}
+          />
+          <Route path={Path.Chat} element={token ? <Chat /> : <LoginPage />} />
           <Route path={Path.Settings} element={<Settings />} />
         </Routes>
       </div>

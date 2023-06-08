@@ -63,7 +63,7 @@ export async function auth(req: NextRequest) {
     if (!isDjangoTokenValid) {
       return {
         error: true,
-        msg: "Invalid access code",
+        msg: "Invalid access code pls check you have token in config or login again",
       };
     }
     const apiKey = serverConfig.apiKey;

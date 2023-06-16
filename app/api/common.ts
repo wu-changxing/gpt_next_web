@@ -1,11 +1,12 @@
 // app/api/common.ts
-import { NextRequest } from "next/server"; // 导入 Next.js 的 NextRequest 对象，用于处理请求
 
-export const OPENAI_URL = "api.openai.com"; // 定义 OPENAI_URL 常量，表示 OpenAI API 的 URL
-const DEFAULT_PROTOCOL = "https"; // 定义 DEFAULT_PROTOCOL 常量，默认为 "https"
-const PROTOCOL = process.env.PROTOCOL ?? DEFAULT_PROTOCOL; // 从环境变量中获取 PROTOCOL，如果不存在则使用 DEFAULT_PROTOCOL
-const BASE_URL = process.env.BASE_URL ?? OPENAI_URL; // 从环境变量中获取 BASE_URL，如果不存在则使用 OPENAI_URL
-// export const DJ_URL = process.env.DJ_URL ?? "https://aaron404.com"; // 从环境变量中获取 DJ_URL，如果不存在则使用 "api.openai.com"
+import { NextRequest, NextResponse } from "next/server";
+
+export const OPENAI_URL = "api.openai.com";
+const DEFAULT_PROTOCOL = "https";
+const PROTOCOL = process.env.PROTOCOL ?? DEFAULT_PROTOCOL;
+const BASE_URL = process.env.BASE_URL ?? OPENAI_URL;
+const DISABLE_GPT4 = !!process.env.DISABLE_GPT4;
 
 export async function requestOpenai(req: NextRequest) {
   // console.log(req.body)
@@ -49,21 +50,45 @@ export async function requestOpenai(req: NextRequest) {
     signal: controller.signal, // 设置信号为 AbortController 的信号，用于中止请求
   };
 
+  // #1815 try to refuse gpt4 request
+  if (DISABLE_GPT4 && req.body) {
+    try {
+      const clonedBody = await req.text();
+      fetchOptions.body = clonedBody;
+
+      const jsonBody = JSON.parse(clonedBody);
+
+      if ((jsonBody?.model ?? "").includes("gpt-4")) {
+        return NextResponse.json(
+          {
+            error: true,
+            message: "you are not allowed to use gpt-4 model",
+          },
+          {
+            status: 403,
+          },
+        );
+      }
+    } catch (e) {
+      console.error("[OpenAI] gpt4 filter", e);
+    }
+  }
+
   try {
     const res = await fetch(fetchUrl, fetchOptions); // 发起请求并等待响应
 
-    if (res.status === 401) {
-      // to prevent browser prompt for credentials
-      const newHeaders = new Headers(res.headers);
-      newHeaders.delete("www-authenticate");
-      return new Response(res.body, {
-        status: res.status,
-        statusText: res.statusText,
-        headers: newHeaders,
-      });
-    }
+    // to prevent browser prompt for credentials
+    const newHeaders = new Headers(res.headers);
+    newHeaders.delete("www-authenticate");
 
-    return res; // 返回响应对象
+    // to disbale ngnix buffering
+    newHeaders.set("X-Accel-Buffering", "no");
+
+    return new Response(res.body, {
+      status: res.status,
+      statusText: res.statusText,
+      headers: newHeaders,
+    });
   } finally {
     clearTimeout(timeoutId); // 清除超时定时器
   }

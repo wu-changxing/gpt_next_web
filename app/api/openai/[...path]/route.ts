@@ -4,8 +4,10 @@ import { prettyObject } from "@/app/utils/format"; // 导入名为 prettyObject 
 import { NextRequest, NextResponse } from "next/server"; // 导入 Next.js 的 NextRequest 和 NextResponse 对象，用于处理请求和响应
 
 import { auth } from "../../auth"; // 导入 auth 函数，位于相对路径 "../../auth" 中
-
 import { requestOpenai } from "../../common"; // 导入 requestOpenai 函数，位于相对路径 "../../common" 中
+import { OpenaiPath } from "@/app/constant";
+
+const ALLOWD_PATH = new Set(Object.values(OpenaiPath));
 
 async function handle(
   req: NextRequest,
@@ -13,7 +15,27 @@ async function handle(
 ) {
   console.log("[OpenAI Route] params ", params); // 打印日志，输出 params 参数的值
 
-  const authResult = await auth(req); // 调用 auth 函数，传入 req 对象进行身份验证
+  if (req.method === "OPTIONS") {
+    return NextResponse.json({ body: "OK" }, { status: 200 });
+  }
+
+  const subpath = params.path.join("/");
+
+  if (!ALLOWD_PATH.has(subpath)) {
+    console.log("[OpenAI Route] forbidden path ", subpath);
+    return NextResponse.json(
+      {
+        error: true,
+        msg: "you are not allowed to request " + subpath,
+      },
+      {
+        status: 403,
+      },
+    );
+  }
+
+  const authResult = await auth(req);
+
   if (authResult.error) {
     return NextResponse.json(authResult, {
       status: 401,

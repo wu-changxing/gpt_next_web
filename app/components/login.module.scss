@@ -1,0 +1,120 @@
+.loginPage {
+  display: flex;
+  justify-items: center;
+  align-items: center;
+  height: 100vh;
+  width: 100vw;
+  background: linear-gradient(to bottom right, #0649b0, #0585b4, #039cce, #3cb2e3,
+          #5cfafa, #e1266e, #cc0b73, #e325a7);
+  box-sizing: border-box;
+  padding: 0;
+  margin: 0;
+}
+
+.message {
+  color: red;
+  background-color: pink;
+  padding: 5px;
+  border-radius: 5px;
+  margin-bottom: 10px;
+}
+
+.loginContainer {
+  padding: 15px;
+  @media (min-width: 568px) {
+    padding: 30px;
+    margin-left: 60px;
+  }
+  margin-left: 10px;
+  background-color: white;
+  border-radius: 5px;
+  display: flex;
+  flex-direction: column;
+  justify-items: center;
+  place-items: center;
+  gap: 10px;
+  max-width: 320px;
+  width: 100%;
+  min-height: 50px;
+}
+
+.label {
+  font-weight: bold;
+  color: #53b2e5;
+}
+.inputGroup {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+  position: relative; /* added this line */
+}
+
+
+.input {
+  padding: 5px;
+  font-size: x-large;
+  height: 40px;
+  border: 1px solid gray;
+  border-radius: 2px;
+  margin-top: 10px;
+  margin-bottom: 5px;
+  width: 100%;
+  box-sizing: border-box;
+  text-align: left; // added this line
+}
+
+
+.button {
+  padding: 5px;
+  font-size: xx-large;
+  background-color: #21ace5;
+  color: white;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+
+  &:hover {
+    background-color: #0c99ef;
+  }
+}
+
+.error {
+  color: #721c24;
+  background-color: #f8d7da;
+  padding: 5px;
+  border-radius: 5px;
+  margin-bottom: 10px;
+}
+
+.signUp {
+  color: #445057;
+}
+
+.link {
+  color: #de0b2a;
+  &:hover {
+    color: #ec08c6;
+  }
+}
+
+.form {
+  display: flex;
+  flex-direction: column;
+}
+.icon {
+  width: 20px;  /* adjust this value to your liking */
+  height: 20px; /* adjust this value to your liking */
+  fill: #8a8787; /* color of the icon, adjust to your liking */
+}
+
+.icon_button {
+  background: none;
+  border: none;
+  cursor: pointer;
+  outline: inherit;
+  position: absolute;
+  right: 10px;
+  top: 50%;
+  transform: translateY(-50%);
+}

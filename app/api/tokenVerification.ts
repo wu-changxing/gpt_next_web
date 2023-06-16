@@ -2,10 +2,9 @@ import { NextRequest } from "next/server";
 export async function verifyDjangoToken(token: string) {
   const DJ_URL = process.env.DJ_URL ?? "http://aaron404.com";
 
-  // const res = await fetch(`${DJ_URL}/eac/api/token/verify/`, {
   console.log("DJ_URL: ", DJ_URL, token);
   try {
-    const res = await fetch("http://127.0.0.1:8000/eac/api/token/verify/", {
+    const res = await fetch(`${DJ_URL}/eac/api/token/verify/`, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       cache: "no-store",

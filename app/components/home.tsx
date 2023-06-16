@@ -1,5 +1,3 @@
-"use client";
-
 require("../polyfill");
 import React, { ReactNode } from "react";
 import { useState, useEffect } from "react";
@@ -101,6 +99,17 @@ const loadAsyncGoogleFont = () => {
     "/google-fonts/css2?family=Noto+Sans+SC:wght@300;400;700;900&display=swap";
   document.head.appendChild(linkEl);
 };
+function getCookie(name: string) {
+  const value = `; ${document.cookie}`;
+  const parts = value.split(`; ${name}=`);
+  if (parts.length === 2) {
+    const cookiePart = parts.pop();
+    if (cookiePart) {
+      return cookiePart.split(";").shift();
+    }
+  }
+  return null;
+}
 
 function Screen() {
   const config = useAppConfig();
@@ -108,8 +117,9 @@ function Screen() {
   const isHome = location.pathname === Path.Home;
   const isMobileScreen = useMobileScreen();
 
-  const token =
+  const storedToken =
     typeof window !== "undefined" ? localStorage.getItem("token") : null;
+  const token = storedToken ? storedToken : getCookie("token");
   useEffect(() => {
     loadAsyncGoogleFont();
   }, []);

@@ -29,8 +29,9 @@ function parseApiKey(bearToken: string) {
 
 export async function auth(req: NextRequest) {
   const authToken = req.headers.get("Authorization") ?? "";
-  console.log("process.env.NODE_ENV", process.env.DJ_URL);
 
+  // const body = JSON.parse(req.body)
+  // console.log("body", body)
   const { accessCode, apiKey: token } = parseApiKey(authToken);
 
   const hashedCode = md5.hash(accessCode ?? "").trim();

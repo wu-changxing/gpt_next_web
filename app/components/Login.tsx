@@ -104,7 +104,7 @@ export default function LoginPage({ searchParams }: IProps) {
         </form>
         <p className={styles.signUp}>
           Dont have an account?{" "}
-          <a href="https://eac.aaron404.com/register" className={styles.link}>
+          <a href="https://eac.aaron404.com/#/register" className={styles.link}>
             Sign up here
           </a>
           .

@@ -8,6 +8,7 @@ const BASE_URL = process.env.BASE_URL ?? OPENAI_URL; // 从环境变量中获取
 // export const DJ_URL = process.env.DJ_URL ?? "https://aaron404.com"; // 从环境变量中获取 DJ_URL，如果不存在则使用 "api.openai.com"
 
 export async function requestOpenai(req: NextRequest) {
+  // console.log(req.body)
   const controller = new AbortController(); // 创建一个 AbortController 对象，用于在需要时中止请求
   const authValue = req.headers.get("Authorization") ?? ""; // 获取请求头中的 Authorization 字段，如果不存在则默认为空字符串
   const openaiPath = `${req.nextUrl.pathname}${req.nextUrl.search}`.replaceAll(
@@ -33,6 +34,7 @@ export async function requestOpenai(req: NextRequest) {
   }, 10 * 60 * 1000); // 设置超时时间为 10 分钟，并在超时时中止请求
 
   const fetchUrl = `${baseUrl}/${openaiPath}`; // 构建完整的请求 URL
+  console.log(req.body);
   const fetchOptions: RequestInit = {
     headers: {
       "Content-Type": "application/json",

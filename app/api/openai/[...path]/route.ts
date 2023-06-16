@@ -21,6 +21,7 @@ async function handle(
   }
 
   try {
+    console.log(req.body);
     return await requestOpenai(req); // 调用 requestOpenai 函数，传入 req 对象，并等待其返回结果
   } catch (e) {
     console.error("[OpenAI] ", e); // 捕获异常，并打印错误日志

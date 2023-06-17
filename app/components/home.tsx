@@ -145,7 +145,7 @@ function Screen() {
     >
       {isAuth ? (
         <>
-          <AuthPage />
+          <LoginPage />
         </>
       ) : (
         <>

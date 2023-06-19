@@ -4,7 +4,7 @@ const cn = {
   WIP: "该功能仍在开发中……",
   Error: {
     Unauthorized:
-      "访问密码不正确或为空，请前往[设置](/#/settings)页查看token是否存在。或者重新登陆",
+      "访问密码不正确或为空，请前往[设置](/#/settings)页查看token是否存在。或者重新[登陆](/#/login)。",
   },
   Auth: {
     Title: "需要密码",

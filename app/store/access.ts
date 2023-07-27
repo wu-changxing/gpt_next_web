@@ -51,15 +51,16 @@ export const useAccessStore = create<AccessControlStore>()(
 
       updateCode(code: string) {
         console.log("Before update: ", get().accessCode);
-        set(() => ({ accessCode: code }));
+        // set(() => ({ accessCode: code }));
+        set(() => ({ accessCode: code?.trim() }));
         console.log("After update: ", get().accessCode);
       },
 
       updateToken(token: string) {
-        set(() => ({ token }));
+        set(() => ({ token: token?.trim() }));
       },
       updateOpenAiUrl(url: string) {
-        set(() => ({ openaiUrl: url }));
+        set(() => ({ openaiUrl: url?.trim() }));
       },
       isAuthorized() {
         get().fetch();

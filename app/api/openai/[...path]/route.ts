@@ -5,9 +5,23 @@ import { NextRequest, NextResponse } from "next/server"; // 导入 Next.js 的 N
 
 import { auth } from "../../auth"; // 导入 auth 函数，位于相对路径 "../../auth" 中
 import { requestOpenai } from "../../common"; // 导入 requestOpenai 函数，位于相对路径 "../../common" 中
+import { type OpenAIListModelResponse } from "@/app/client/platforms/openai";
+import { getServerSideConfig } from "@/app/config/server";
 import { OpenaiPath } from "@/app/constant";
 
 const ALLOWD_PATH = new Set(Object.values(OpenaiPath));
+
+function getModels(remoteModelRes: OpenAIListModelResponse) {
+  const config = getServerSideConfig();
+
+  if (config.disableGPT4) {
+    remoteModelRes.data = remoteModelRes.data.filter(
+      (m) => !m.id.startsWith("gpt-4"),
+    );
+  }
+
+  return remoteModelRes;
+}
 
 async function handle(
   req: NextRequest,
@@ -43,8 +57,18 @@ async function handle(
   }
 
   try {
-    console.log(req.body);
-    return await requestOpenai(req); // 调用 requestOpenai 函数，传入 req 对象，并等待其返回结果
+    const response = await requestOpenai(req);
+
+    // list models
+    if (subpath === OpenaiPath.ListModelPath && response.status === 200) {
+      const resJson = (await response.json()) as OpenAIListModelResponse;
+      const availableModels = getModels(resJson);
+      return NextResponse.json(availableModels, {
+        status: response.status,
+      });
+    }
+
+    return response;
   } catch (e) {
     console.error("[OpenAI] ", e); // 捕获异常，并打印错误日志
     return NextResponse.json(prettyObject(e)); // 以 JSON 格式返回错误对象 e 的详细信息

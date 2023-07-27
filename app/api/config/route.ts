@@ -8,9 +8,10 @@ const serverConfig = getServerSideConfig(); // 调用 getServerSideConfig 函数
 // Danger! Don not write any secret value here!
 // 警告！不要在这里写入任何敏感信息！
 const DANGER_CONFIG = {
-  needCode: serverConfig.needCode, // 从 serverConfig 中提取 needCode 属性，赋值给 DANGER_CONFIG 中的 needCode
-  hideUserApiKey: serverConfig.hideUserApiKey, // 从 serverConfig 中提取 hideUserApiKey 属性，赋值给 DANGER_CONFIG 中的 hideUserApiKey
-  enableGPT4: serverConfig.enableGPT4, // 从 serverConfig 中提取 enableGPT4 属性，赋值给 DANGER_CONFIG 中的 enableGPT4
+  needCode: serverConfig.needCode,
+  hideUserApiKey: serverConfig.hideUserApiKey,
+  disableGPT4: serverConfig.disableGPT4,
+  hideBalanceQuery: serverConfig.hideBalanceQuery,
 };
 
 declare global {

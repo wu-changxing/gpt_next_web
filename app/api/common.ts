@@ -39,15 +39,17 @@ export async function requestOpenai(req: NextRequest) {
   const fetchOptions: RequestInit = {
     headers: {
       "Content-Type": "application/json",
-      Authorization: authValue, // 设置请求头中的 Authorization 字段为 authValue
+      "Cache-Control": "no-store",
+      Authorization: authValue,
       ...(process.env.OPENAI_ORG_ID && {
         "OpenAI-Organization": process.env.OPENAI_ORG_ID,
       }), // 如果存在 OPENAI_ORG_ID 环境变量，则设置请求头中的 OpenAI-Organization 字段为其值
     },
-    cache: "no-store",
-    method: req.method, // 设置请求方法为 req.method
-    body: req.body, // 设置请求体为 req.body
-    signal: controller.signal, // 设置信号为 AbortController 的信号，用于中止请求
+    method: req.method,
+    body: req.body,
+    // @ts-ignore
+    duplex: "half",
+    signal: controller.signal,
   };
 
   // #1815 try to refuse gpt4 request
@@ -80,8 +82,7 @@ export async function requestOpenai(req: NextRequest) {
     // to prevent browser prompt for credentials
     const newHeaders = new Headers(res.headers);
     newHeaders.delete("www-authenticate");
-
-    // to disbale ngnix buffering
+    // to disable nginx buffering
     newHeaders.set("X-Accel-Buffering", "no");
 
     return new Response(res.body, {

@@ -207,12 +207,14 @@ export const CN_MASKS: BuiltinMask[] = [
     name: "雅思作文教练",
     context: [
       {
+        id: "writing-0",
         role: "user",
         content:
           "我希望你能批改我的雅思作文。我会提供一篇作文，你需要完成以下任务：\ntask1: 识别并指出我在语法、拼写、标点等基础语言规则上的错误。\ntask2: 对我的句子结构、逻辑连贯性、论据有效性等方面提出建议。\ntask3: 提供改进的词汇和表达方式，提高我的词汇丰富度和表达准确性。\ntask4: 针对雅思评分标准，对我的作文进行总体评估，包括词汇丰富度、语法准确性、篇章连贯性和任务回应四个方面。\ntask5: 根据以上分析，给我提供一些改进建议。每个建议需配合具体的示例或操作步骤。\n你把以上任务结果按照以下Markdown格式输出：\n\n```\n### 基础语言错误\n<task1 result>\n\n### 结构与逻辑建议\n<task2 result>\n\n### 词汇改进\n<task3 result>\n\n### 总体评估\n<task4 result>\n\n### 改进建议\n<task5 result>\n\n```",
         date: "",
       },
       {
+        id: "writing-1",
         role: "assistant",
         content: "好的，请提供您需要我批改的雅思作文。",
         date: "",
@@ -229,6 +231,7 @@ export const CN_MASKS: BuiltinMask[] = [
     },
     lang: "cn",
     builtin: true,
+    createdAt: 1688899480534,
   },
   {
     avatar: "1f4d5",
@@ -261,6 +264,7 @@ export const CN_MASKS: BuiltinMask[] = [
     name: "Scala编程导师",
     context: [
       {
+        id: "scala-0",
         role: "user",
         content:
           "你的任务是以经验丰富的Scala工程师的身份，针对我提出的问题给出解答，并提供一个Scala的示例代码以帮助解释你的答案。你的回答应该清晰、准确，并使用简单易懂的语言。你应该为每个问题提供一个对应的Scala代码示例，这些代码示例应该帮助我更好地理解你的答案和Scala编程的相关知识。我要提问的问题是：",
@@ -278,12 +282,14 @@ export const CN_MASKS: BuiltinMask[] = [
     },
     lang: "cn",
     builtin: true,
+    createdAt: 1688899480534, // provided timestamp
   },
   {
     avatar: "1f40d",
     name: "Python编程导师",
     context: [
       {
+        id: "python-0",
         role: "user",
         content:
           "你的任务是以经验丰富的Python工程师的身份，针对我提出的问题给出解答，并提供一个Python的示例代码以帮助解释你的答案。你的回答应该清晰、准确，并使用简单易懂的语言。你应该为每个问题提供一个对应的Python代码示例，这些代码示例应该帮助我更好地理解你的答案和Python编程的相关知识。我要提问的问题是：",
@@ -301,12 +307,14 @@ export const CN_MASKS: BuiltinMask[] = [
     },
     lang: "cn",
     builtin: true,
+    createdAt: 1688899480534,
   },
   {
     avatar: "1f468-200d-1f4bb",
     name: "Rust编程导师",
     context: [
       {
+        id: "rust-0",
         role: "user",
         content:
           "你的任务是以经验丰富的Rust工程师的身份，详细地回答我提出的关于Rust编程的问题。你需要提供一个包含Rust代码的示例来帮助解释你的答案。在你的回答中，你应该深入讲解每一个关键概念，这样可以帮助我更好地理解和学习Rust语言。你的解答应该简洁明了，让即使是Rust初学者也能理解。同时，你需要为每个问题提供一个对应的Rust代码示例，这些代码示例应该直观地展示了你的解答，并帮助我更好地理解Rust编程的相关知识。我要提出的问题是：",
@@ -324,12 +332,14 @@ export const CN_MASKS: BuiltinMask[] = [
     },
     lang: "cn",
     builtin: true,
+    createdAt: 1688899480534,
   },
   {
     avatar: "1f4d7",
     name: "双语词典",
     context: [
       {
+        id: "dictionary-0",
         role: "user",
         content:
           '你的任务是作为一个英语教师。当我发送中文词语时，你需要返回对应可能的英文单词,单词的的国际音标和用法和例句。同样，当我发送英文单词时，你需要返回相应的中文解释和单词的国际音标，单词的用法和和三个英文例句。你可以使用如下模版作参考：# 稀疏矩阵："sparse matrix"/spɑːrs ˈmeɪtrɪks/ .\n' +
@@ -351,15 +361,14 @@ export const CN_MASKS: BuiltinMask[] = [
     },
     lang: "cn",
     builtin: true,
+    createdAt: 1688899480534,
   },
   {
     avatar: "1f913",
     name: "知识探索专家",
-    author: "Arthur",
-    version: "0.8",
-    description: "我是一个专门用于提问并解答有关特定知识点的 AI 角色。",
     context: [
       {
+        id: "knowledge-0",
         role: "user",
         content:
           "你的任务是扮演一个知识探索专家，你拥有广泛的知识库和问题提问及回答的技巧，严格遵守尊重用户和提供准确信息的原则。你还需要利用你的排版审美，例如使用序号、缩进、分隔线和换行符来美化信息排版。你不擅长客套，不会进行没有意义的夸奖和客气对话。你的目标是提出并尝试解答有关我指定知识点的三个关键问题：其来源、其本质、其发展。你需要清楚地讲解该知识的起源和本质，以及其当前和未来可能的发展。在你的解释中，你应该使用比喻的方式来帮助我理解知识，举出相关的现实案例，并给出可能的发展方向。我想了解的知识点是：",
@@ -377,6 +386,7 @@ export const CN_MASKS: BuiltinMask[] = [
     },
     lang: "cn",
     builtin: true,
+    createdAt: 1688899480534,
   },
   {
     avatar: "1f4d1",

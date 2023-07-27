@@ -1,5 +1,5 @@
 import { NextRequest } from "next/server";
-export async function verifyDjangoToken(token: string) {
+export async function verifyDjangoToken(token: string, deduction: number) {
   const DJ_URL = process.env.DJ_URL ?? "http://aaron404.com";
 
   console.log("DJ_URL: ", DJ_URL, token);
@@ -8,11 +8,11 @@ export async function verifyDjangoToken(token: string) {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       cache: "no-store",
-      body: JSON.stringify({ token }),
+      body: JSON.stringify({ token, deduction }),
     });
 
     console.log("response: ", res);
-    console.log("body: ", JSON.stringify({ token }));
+    console.log("body: ", JSON.stringify({ token, deduction }));
 
     if (res.ok) {
       const data = await res.json(); // Extract JSON from the response

@@ -61,7 +61,7 @@ export async function auth(req: NextRequest) {
 
   // User provides access code but not token
   if (accessCode && !token) {
-    const isDjangoTokenValid = await verifyDjangoToken(accessCode);
+    const isDjangoTokenValid = await verifyDjangoToken(accessCode, 0);
     if (!isDjangoTokenValid) {
       return {
         error: true,
@@ -72,6 +72,7 @@ export async function auth(req: NextRequest) {
     if (apiKey) {
       console.log("[Auth] use system api key provided by admin");
       req.headers.set("Authorization", `Bearer ${apiKey}`);
+      req.headers.set("accessCode", `${accessCode}`);
     } else {
       console.log("[Auth] admin did not provide an api key");
       return {

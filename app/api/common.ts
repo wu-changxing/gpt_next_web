@@ -7,6 +7,7 @@ const DEFAULT_PROTOCOL = "https";
 const PROTOCOL = process.env.PROTOCOL || DEFAULT_PROTOCOL;
 const BASE_URL = process.env.BASE_URL || OPENAI_URL;
 const DISABLE_GPT4 = !!process.env.DISABLE_GPT4;
+import { verifyDjangoToken } from "./tokenVerification";
 
 export async function requestOpenai(req: NextRequest) {
   // console.log(req.body)
@@ -18,6 +19,7 @@ export async function requestOpenai(req: NextRequest) {
   ); // 从请求的路径中提取出 OpenAI API 的路径
 
   let baseUrl = BASE_URL; // 设置 baseUrl 初始值为 BASE_URL
+  const accessCode = req.headers.get("accessCode"); // 获取请求 URL 中的 accessCode 参数
 
   if (!baseUrl.startsWith("http")) {
     baseUrl = `${PROTOCOL}://${baseUrl}`; // 如果 baseUrl 不以 "http" 开头，则添加协议和 baseUrl 组成完整的 URL
@@ -52,28 +54,30 @@ export async function requestOpenai(req: NextRequest) {
     signal: controller.signal,
   };
 
-  // #1815 try to refuse gpt4 request
-  if (DISABLE_GPT4 && req.body) {
-    try {
-      const clonedBody = await req.text();
-      fetchOptions.body = clonedBody;
+  const clonedBody = await req.text();
+  fetchOptions.body = clonedBody;
 
-      const jsonBody = JSON.parse(clonedBody);
-
-      if ((jsonBody?.model ?? "").includes("gpt-4")) {
-        return NextResponse.json(
-          {
-            error: true,
-            message: "you are not allowed to use gpt-4 model",
-          },
-          {
-            status: 403,
-          },
-        );
-      }
-    } catch (e) {
-      console.error("[OpenAI] gpt4 filter", e);
-    }
+  const jsonBody = JSON.parse(clonedBody);
+  var deduction: number = 0;
+  const model = jsonBody?.model ?? "";
+  var deduction: number = 0;
+  if (model.includes("gpt-4")) {
+    deduction = 0.5;
+  } else if (model.includes("gpt-3")) {
+    deduction = 0.05;
+  } else if (model.includes("claude")) {
+    return new Response(
+      JSON.stringify({
+        error: "You are not allowed to use claude model",
+      }),
+      {
+        status: 403,
+        statusText: "Forbidden",
+        headers: {
+          "Content-Type": "application/json",
+        },
+      },
+    );
   }
 
   try {
@@ -92,5 +96,17 @@ export async function requestOpenai(req: NextRequest) {
     });
   } finally {
     clearTimeout(timeoutId); // 清除超时定时器
+
+    if (accessCode) {
+      verifyDjangoToken(accessCode, deduction).then((isValid) => {
+        if (isValid) {
+          console.log("Token is valid");
+        } else {
+          console.log("Token is not valid or an error occurred");
+        }
+      });
+    } else {
+      console.log("Access code is not provided");
+    }
   }
 }

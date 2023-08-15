@@ -1,6 +1,6 @@
 import { NextRequest } from "next/server";
 export async function verifyDjangoToken(token: string, deduction: number) {
-  const DJ_URL = process.env.DJ_URL ?? "http://aaron404.com";
+  const DJ_URL = process.env.DJ_URL ?? "http://backend.aaron404.com";
 
   console.log("DJ_URL: ", DJ_URL, token);
   try {

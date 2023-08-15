@@ -17,7 +17,8 @@ export default function LoginPage({ searchParams }: IProps) {
   const [showPassword, setShowPassword] = useState(false); // added th
   const updateCode = useAccessStore((state) => state.updateCode);
 
-  const DJ_URL = process.env.NEXT_PUBLIC_DJ_URL || "https://aaron404.com";
+  const DJ_URL =
+    process.env.NEXT_PUBLIC_DJ_URL || "https://backend.aaron404.com";
   console.log("DJ_URL", DJ_URL);
 
   const toggleShowPassword = () => {

@@ -43,6 +43,7 @@ export default function LoginPage({ searchParams }: IProps) {
       if (res.ok) {
         const data = await res.json();
         localStorage.setItem("token", data.token);
+        console.log("set the token", data.token);
         updateCode(data.token); // Update Zustand store
 
         navigate("/");

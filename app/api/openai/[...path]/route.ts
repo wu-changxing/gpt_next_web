@@ -79,3 +79,22 @@ export const GET = handle; // 导出 handle 函数作为 GET 常量，供路由�
 export const POST = handle; // 导出 handle 函数作为 POST 常量，供路由使用
 
 export const runtime = "edge"; // 导出 runtime 常量，其值为字符串 "edge"
+export const preferredRegion = [
+  "arn1",
+  "bom1",
+  "cdg1",
+  "cle1",
+  "cpt1",
+  "dub1",
+  "fra1",
+  "gru1",
+  "hnd1",
+  "iad1",
+  "icn1",
+  "kix1",
+  "lhr1",
+  "pdx1",
+  "sfo1",
+  "sin1",
+  "syd1",
+];

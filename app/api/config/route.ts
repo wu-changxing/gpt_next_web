@@ -5,13 +5,15 @@ import { getServerSideConfig } from "../../config/server"; // 导入 getServerSi
 
 const serverConfig = getServerSideConfig(); // 调用 getServerSideConfig 函数，将返回的服务器配置信息存储在 serverConfig 变量中
 
-// Danger! Don not write any secret value here!
+// Danger! Do not hard code any secret value here!
 // 警告！不要在这里写入任何敏感信息！
 const DANGER_CONFIG = {
   needCode: serverConfig.needCode,
   hideUserApiKey: serverConfig.hideUserApiKey,
   disableGPT4: serverConfig.disableGPT4,
   hideBalanceQuery: serverConfig.hideBalanceQuery,
+  disableFastLink: serverConfig.disableFastLink,
+  customModels: serverConfig.customModels,
 };
 
 declare global {

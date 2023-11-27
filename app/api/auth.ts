@@ -33,6 +33,7 @@ export async function auth(req: NextRequest) {
   // const body = JSON.parse(req.body)
   // console.log("body", body)
   const { accessCode, apiKey: token } = parseApiKey(authToken);
+  // check if it is openai api key or user token
 
   const hashedCode = md5.hash(accessCode ?? "").trim();
 

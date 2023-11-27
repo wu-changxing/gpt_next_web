@@ -1,6 +1,10 @@
 // app/api/common.ts
 
 import { NextRequest, NextResponse } from "next/server";
+import { getServerSideConfig } from "../config/server";
+import { DEFAULT_MODELS, OPENAI_BASE_URL } from "../constant";
+import { collectModelTable } from "../utils/model";
+import { makeAzurePath } from "../azure";
 
 export const OPENAI_URL = "api.openai.com";
 const DEFAULT_PROTOCOL = "https";
@@ -11,6 +15,7 @@ import { verifyDjangoToken } from "./tokenVerification";
 
 export async function requestOpenai(req: NextRequest) {
   // console.log(req.body)
+  const serverConfig = getServerSideConfig();
   const controller = new AbortController(); // 创建一个 AbortController 对象，用于在需要时中止请求
   const authValue = req.headers.get("Authorization") ?? ""; // 获取请求头中的 Authorization 字段，如果不存在则默认为空字符串
   const openaiPath = `${req.nextUrl.pathname}${req.nextUrl.search}`.replaceAll(
@@ -49,6 +54,8 @@ export async function requestOpenai(req: NextRequest) {
     },
     method: req.method,
     body: req.body,
+    // to fix #2485: https://stackoverflow.com/questions/55920957/cloudflare-worker-typeerror-one-time-use-body
+    redirect: "manual",
     // @ts-ignore
     duplex: "half",
     signal: controller.signal,

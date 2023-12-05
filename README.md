@@ -1,23 +1,32 @@
 <div align="center">
-<img src="./docs/images/icon.svg" alt="icon"/>
+    <img src="./docs/images/icon.svg" alt="icon"/>
+    <h1>ChatGPT Next Web</h1>
+</div>
 
-<h1 align="center">ChatGPT Next Web</h1>
+## About This Fork
 
-# About This Fork
+_GPT Next Web_ is an incredible project that showcases the capabilities of openAI api. This fork introduces key enhancements to extend its functionality.
 
-GPT Next Web has been an incredible project, offering a robust platform for exploring Generative Pre-trained Transformer (GPT) capabilities. In this fork, we've added key features to extend its functionality:
+### Features
 
-## Authentication:
+#### Authentication
 
-To ensure a secure and personalized experience, we've integrated an authentication system. This allows users to create accounts, manage their sessions, and ensure their interactions are private and secure.
+- **Secure User Experience**: We have integrated a comprehensive authentication system to enhance security and provide a personalized experience.
+- **Account Management**: Users can now create their own accounts, manage their sessions, and ensure their interactions remain private and secure.
 
-## Credit System:
+#### Credit System
 
-We've implemented a credit system to manage usage. This feature is particularly useful for rationing API calls or other resources, ensuring fair usage among all users.
+- **Resource Management**: A credit system has been implemented to effectively manage the usage of API calls and other critical resources.
 
-## start
+### Getting Started
 
-```
+To get started with this fork, simply run the following commands:
+
+```bash
 npm i
 npm run dev
 ```
+
+### Repository
+
+For more details, visit the repository: [GPT Next Web on GitHub](https://github.com/wu-changxing/gpt_next_web)

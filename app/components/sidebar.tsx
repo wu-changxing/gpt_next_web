@@ -155,15 +155,12 @@ export function SideBar(props: { className?: string }) {
     >
       <div className={styles["sidebar-header"]} data-tauri-drag-region>
         <div className={styles["sidebar-title"]} data-tauri-drag-region>
-          EAC ChatGPT Next
+          Uniwise Dashboard
         </div>
         <div className={styles["sidebar-sub-title"]}>
-          GPT for our community.
+          Ask me anything about UNSW
         </div>
-        <span className={styles["sidebar-sub-title"]}>
-          {" "}
-          powerd by @GPT next
-        </span>
+        <span className={styles["sidebar-sub-title"]}> powerd by @Uniwise</span>
         <div className={styles["sidebar-logo"] + " no-dark"}>
           <ChatGptIcon />
         </div>

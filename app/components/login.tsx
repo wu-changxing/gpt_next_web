@@ -17,8 +17,7 @@ export default function LoginPage({ searchParams }: IProps) {
   const [showPassword, setShowPassword] = useState(false); // added th
   const updateCode = useAccessStore((state) => state.updateCode);
 
-  const DJ_URL =
-    process.env.NEXT_PUBLIC_DJ_URL || "https://backend.aaron404.com";
+  const DJ_URL = "https://backend.aaron404.com";
   console.log("DJ_URL", DJ_URL);
 
   const toggleShowPassword = () => {
@@ -65,9 +64,7 @@ export default function LoginPage({ searchParams }: IProps) {
         <h2 className={styles.title}>Login</h2>
 
         {error && <div className={styles.error}>{error}</div>}
-        <p className={styles.tip}>
-          如果您看到这个页面，请您在此重新登录一次，账号密码依旧是EAC的账号密码，如果您忘记了密码，或者不是账号主人，请您联系管理员重置密码。
-        </p>
+        <p className={styles.tip}>ask admin to give you an account</p>
         <form className={styles.form} onSubmit={onSubmit}>
           <label className={styles.label} htmlFor="username">
             User Name
@@ -110,10 +107,9 @@ export default function LoginPage({ searchParams }: IProps) {
         </form>
         <p className={styles.signUp}>
           Dont have an account?{" "}
-          <a href="https://eac.aaron404.com/#/register" className={styles.link}>
-            Sign up here
-          </a>
-          .
+          {/*<a href="https://eac.aaron404.com/#/register" className={styles.link}>*/}
+          {/*  Sign up here*/}
+          {/*</a>*/}.
         </p>
       </div>
     </div>
